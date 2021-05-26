@@ -17,6 +17,7 @@
 		544B39AA265DD9D600AEFE2A /* StarWarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B39A9265DD9D600AEFE2A /* StarWarsUITests.swift */; };
 		544B39B8265DDA2A00AEFE2A /* MasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B39B7265DDA2A00AEFE2A /* MasterView.swift */; };
 		544B39BA265DDA6B00AEFE2A /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B39B9265DDA6B00AEFE2A /* DetailView.swift */; };
+		544B39BE265DF8C700AEFE2A /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B39BD265DF8C700AEFE2A /* CardCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		544B39AB265DD9D600AEFE2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		544B39B7265DDA2A00AEFE2A /* MasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterView.swift; sourceTree = "<group>"; };
 		544B39B9265DDA6B00AEFE2A /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		544B39BD265DF8C700AEFE2A /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 			children = (
 				544B3984265DD9D200AEFE2A /* AppDelegate.swift */,
 				544B3990265DD9D600AEFE2A /* Assets.xcassets */,
+				544B39BD265DF8C700AEFE2A /* CardCell.swift */,
 				544B39B9265DDA6B00AEFE2A /* DetailView.swift */,
 				544B39B7265DDA2A00AEFE2A /* MasterView.swift */,
 				544B3986265DD9D200AEFE2A /* SceneDelegate.swift */,
@@ -269,6 +272,7 @@
 				544B39B8265DDA2A00AEFE2A /* MasterView.swift in Sources */,
 				544B39BA265DDA6B00AEFE2A /* DetailView.swift in Sources */,
 				544B3987265DD9D200AEFE2A /* SceneDelegate.swift in Sources */,
+				544B39BE265DF8C700AEFE2A /* CardCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
