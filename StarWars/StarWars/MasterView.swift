@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import CoreData
 
 class MasterView: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
     let cardService = CardService()
-    
+
     //Offline Copy
     struct MemCard {
         var id: Int
@@ -26,6 +27,11 @@ class MasterView: UIViewController {
     
     override func loadView() {
         super.loadView()
+        
+        //Set Core Data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
         if memCards.count != 10 {
             cardService.fetchDetails { Cards in
                 if let Cards = Cards {
@@ -60,7 +66,7 @@ class MasterView: UIViewController {
 
 extension MasterView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected Item")
+        print("Selected Item: \(indexPath.row)")
     }
 }
 
@@ -80,10 +86,12 @@ extension MasterView: UICollectionViewDataSource {
             var imageData: Data = Data()
             do {
                 imageData = try Data(contentsOf: imageURL)
+                infoCell.setData(image: UIImage(data: imageData)!, date: memCards[indexPath.row].date, title: memCards[indexPath.row].title, location: memCards[indexPath.row].location, overview: memCards[indexPath.row].overview)
             } catch  {
                 print(error)
+                infoCell.setData(image: UIImage(named: "Test")!, date: memCards[indexPath.row].date, title: memCards[indexPath.row].title, location: memCards[indexPath.row].location, overview: memCards[indexPath.row].overview)
             }
-            infoCell.setData(image: (UIImage(data: imageData) ?? UIImage(named: "Test"))!, date: memCards[indexPath.row].date, title: memCards[indexPath.row].title, location: memCards[indexPath.row].location, overview: memCards[indexPath.row].overview)
+            
             cell = infoCell
         }
         return cell

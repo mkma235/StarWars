@@ -8,22 +8,28 @@
 import UIKit
 
 class DetailView: UIViewController {
-
+    
+    @IBOutlet weak var imageDetail: UIImageView!
+    @IBOutlet weak var dateDetail: UILabel!
+    @IBOutlet weak var titleDetail: UILabel!
+    @IBOutlet weak var locationDetail: UILabel!
+    @IBOutlet weak var overviewDetail: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+     
+        self.imageDetail.image = UIImage(named: "Test")
+        self.dateDetail.text = "May 26, 2021"
+        self.titleDetail.text = "Taylor Swift"
+        self.locationDetail.text = "My Heart"
+        self.overviewDetail.text = "Everyday"
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setDetails(image: UIImage, date: String, title: String, location: String, overview: String) {
+        self.imageDetail.image = image
+        self.dateDetail.text = date
+        self.titleDetail.text = title
+        self.locationDetail.text = location
+        self.overviewDetail.text = overview
     }
-    */
-
 }
