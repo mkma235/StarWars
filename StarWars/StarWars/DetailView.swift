@@ -9,6 +9,7 @@ import UIKit
 
 class DetailView: UIViewController {
     
+    var CardView: MemCard!
     @IBOutlet weak var imageDetail: UIImageView!
     @IBOutlet weak var dateDetail: UILabel!
     @IBOutlet weak var titleDetail: UILabel!
@@ -17,19 +18,35 @@ class DetailView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController!.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Details"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareEvent))
      
-        self.imageDetail.image = UIImage(named: "Test")
-        self.dateDetail.text = "May 26, 2021"
-        self.titleDetail.text = "Taylor Swift"
-        self.locationDetail.text = "My Heart"
-        self.overviewDetail.text = "Everyday"
+        self.imageDetail.image = UIImage(data: CardView.imageData)
+        self.dateDetail.text = CardView.date
+        self.titleDetail.text = CardView.title
+        self.locationDetail.text = CardView.location
+        self.overviewDetail.text = CardView.overview
     }
-
-    func setDetails(image: UIImage, date: String, title: String, location: String, overview: String) {
-        self.imageDetail.image = image
-        self.dateDetail.text = date
-        self.titleDetail.text = title
-        self.locationDetail.text = location
-        self.overviewDetail.text = overview
+    
+    @objc func shareEvent() {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, 0)
+            self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+            let ss = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            let AV = UIActivityViewController(activityItems: [ss!], applicationActivities: nil)
+            self.present(AV, animated: true, completion: nil)
+        } else if UIDevice.current.userInterfaceIdiom == .pad {
+            UIGraphicsBeginImageContextWithOptions(self.view.frame.size, false, 0)
+            self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+            let ss = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            let AV = UIActivityViewController(activityItems: [ss!], applicationActivities: nil)
+            AV.popoverPresentationController?.sourceView = self.view
+            AV.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+            self.present(AV, animated: true, completion: nil)
+        }
+        
     }
 }

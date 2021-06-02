@@ -55,7 +55,7 @@ class MasterView: UIViewController {
                             memory.imageData = imageData
                         } catch  {
                             print(error)
-                            imageData = (UIImage(named: "Test")?.pngData())!
+                            imageData = (UIImage(named: "NoMoon")?.pngData())!
                             memory.imageData = imageData
                         }
                         self.memCards.append(memory)
@@ -120,7 +120,13 @@ class MasterView: UIViewController {
 
 extension MasterView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected Item: \(indexPath.row)")
+        for memoryCard in memCards {
+            if memoryCard.id == (indexPath.row+1) {
+                let dv = storyboard?.instantiateViewController(identifier: "DetailView") as! DetailView
+                dv.CardView = memoryCard
+                navigationController?.pushViewController(dv, animated: true)
+            }
+        }
     }
 }
 
