@@ -21,6 +21,7 @@
 		544B39C0265E28AC00AEFE2A /* CardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B39BF265E28AB00AEFE2A /* CardService.swift */; };
 		544B39CB265EF72800AEFE2A /* MemoryCard+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B39C9265EF72800AEFE2A /* MemoryCard+CoreDataClass.swift */; };
 		544B39CC265EF72800AEFE2A /* MemoryCard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B39CA265EF72800AEFE2A /* MemoryCard+CoreDataProperties.swift */; };
+		544B39CE26678C1800AEFE2A /* MemCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B39CD26678C1800AEFE2A /* MemCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		544B39BF265E28AB00AEFE2A /* CardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardService.swift; sourceTree = "<group>"; };
 		544B39C9265EF72800AEFE2A /* MemoryCard+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoryCard+CoreDataClass.swift"; sourceTree = "<group>"; };
 		544B39CA265EF72800AEFE2A /* MemoryCard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoryCard+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		544B39CD26678C1800AEFE2A /* MemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				544B39BF265E28AB00AEFE2A /* CardService.swift */,
 				544B39B9265DDA6B00AEFE2A /* DetailView.swift */,
 				544B39B7265DDA2A00AEFE2A /* MasterView.swift */,
+				544B39CD26678C1800AEFE2A /* MemCard.swift */,
 				544B3986265DD9D200AEFE2A /* SceneDelegate.swift */,
 				544B3992265DD9D600AEFE2A /* LaunchScreen.storyboard */,
 				544B398A265DD9D200AEFE2A /* Main.storyboard */,
@@ -279,6 +282,7 @@
 				544B39CB265EF72800AEFE2A /* MemoryCard+CoreDataClass.swift in Sources */,
 				544B398F265DD9D200AEFE2A /* StarWars.xcdatamodeld in Sources */,
 				544B39C0265E28AC00AEFE2A /* CardService.swift in Sources */,
+				544B39CE26678C1800AEFE2A /* MemCard.swift in Sources */,
 				544B3985265DD9D200AEFE2A /* AppDelegate.swift in Sources */,
 				544B39B8265DDA2A00AEFE2A /* MasterView.swift in Sources */,
 				544B39BA265DDA6B00AEFE2A /* DetailView.swift in Sources */,

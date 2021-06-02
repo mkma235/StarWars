@@ -9,6 +9,7 @@ import UIKit
 
 class DetailView: UIViewController {
     
+    var CardView: MemCard!
     @IBOutlet weak var imageDetail: UIImageView!
     @IBOutlet weak var dateDetail: UILabel!
     @IBOutlet weak var titleDetail: UILabel!
@@ -18,18 +19,19 @@ class DetailView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        self.imageDetail.image = UIImage(named: "Test")
-        self.dateDetail.text = "May 26, 2021"
-        self.titleDetail.text = "Taylor Swift"
-        self.locationDetail.text = "My Heart"
-        self.overviewDetail.text = "Everyday"
-    }
-
-    func setDetails(image: UIImage, date: String, title: String, location: String, overview: String) {
-        self.imageDetail.image = image
-        self.dateDetail.text = date
-        self.titleDetail.text = title
-        self.locationDetail.text = location
-        self.overviewDetail.text = overview
+        let strURL = CardView.image
+        let imageURL = URL(string: strURL)!
+        var imageData: Data = Data()
+        do {
+            imageData = try Data(contentsOf: imageURL)
+            self.imageDetail.image = UIImage(data: imageData)!
+        } catch  {
+            print(error)
+            self.imageDetail.image = UIImage(named: "Test")
+        }
+        self.dateDetail.text = CardView.date
+        self.titleDetail.text = CardView.title
+        self.locationDetail.text = CardView.location
+        self.overviewDetail.text = CardView.overview
     }
 }
