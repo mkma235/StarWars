@@ -13,8 +13,17 @@ class MasterView: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     let cardService = CardService()
+
+    //Offline Copy
+    struct MemCard {
+        var id: Int
+        var image: String
+        var date: String
+        var title: String
+        var location: String
+        var overview: String
+    }
     var memCards: [MemCard] = []
-    var detailCard: MemCard!
     
     override func loadView() {
         super.loadView()
@@ -71,8 +80,6 @@ class MasterView: UIViewController {
             }
         } else {
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MemoryCard")
-            let idSort = NSSortDescriptor(key: "id", ascending: true)
-            request.sortDescriptors = [idSort]
             do {
                 let result = try context.fetch(request)
                 for MemoryCard in result as! [NSManagedObject] {
@@ -106,14 +113,7 @@ class MasterView: UIViewController {
 
 extension MasterView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        for Card in memCards {
-            if Card.id == (indexPath.row+1) {
-                detailCard = MemCard.init(id: Card.id, image: Card.image, date: Card.date, title: Card.title, location: Card.location, overview: Card.overview)
-            }
-        }
-        let dv = storyboard?.instantiateViewController(withIdentifier: "DetailView") as! DetailView
-        dv.CardView = detailCard
-        self.navigationController!.pushViewController(dv, animated: true)
+        print("Selected Item: \(indexPath.row)")
     }
 }
 
