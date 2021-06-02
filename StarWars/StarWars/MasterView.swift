@@ -13,16 +13,6 @@ class MasterView: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     let cardService = CardService()
-
-    //Offline Copy
-    struct MemCard {
-        var id: Int
-        var image: String
-        var date: String
-        var title: String
-        var location: String
-        var overview: String
-    }
     var memCards: [MemCard] = []
     
     override func loadView() {
@@ -45,22 +35,35 @@ class MasterView: UIViewController {
         }
         
         if firstAppRun && !airPlaneMode {
+            //API Call
             self.cardService.fetchDetails { Cards in
                 if let Cards = Cards {
                     for Card in Cards {
-                        var memory = MemCard(id: 0, image: "N/A", date: "N/A", title: "N/A", location: "N/A", overview: "N/A")
+                        var memory = MemCard(id: 0, image: "N/A", date: "N/A", title: "N/A", location: "N/A", overview: "N/A", imageData: Data())
                         memory.id = Card.id
                         memory.image = Card.image ?? "placeHolder"
                         memory.date = Card.date
                         memory.title = Card.title
                         memory.location = Card.locationline1
                         memory.overview = Card.description
+                        //Add Image Data
+                        let strURL = memory.image
+                        let imageURL = URL(string: strURL)!
+                        var imageData: Data = Data()
+                        do {
+                            imageData = try Data(contentsOf: imageURL)
+                            memory.imageData = imageData
+                        } catch  {
+                            print(error)
+                            imageData = (UIImage(named: "Test")?.pngData())!
+                            memory.imageData = imageData
+                        }
                         self.memCards.append(memory)
                     }
                 }
                 self.collectionView.reloadData()
             }
-            
+            //Save Core Data Values
             Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { (_) in
                 for i in 0..<self.memCards.count {
                     let entity = NSEntityDescription.entity(forEntityName: "MemoryCard", in: context)
@@ -71,6 +74,7 @@ class MasterView: UIViewController {
                     MemoryCard.setValue(self.memCards[i].title, forKey: "title")
                     MemoryCard.setValue(self.memCards[i].location, forKey: "location")
                     MemoryCard.setValue(self.memCards[i].overview, forKey: "overview")
+                    MemoryCard.setValue(self.memCards[i].imageData, forKey: "imageData")
                 }
                 do {
                     try context.save()
@@ -80,16 +84,19 @@ class MasterView: UIViewController {
             }
         } else {
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MemoryCard")
+            let idSort = NSSortDescriptor(key:"id", ascending:true)
+            request.sortDescriptors = [idSort]
             do {
                 let result = try context.fetch(request)
                 for MemoryCard in result as! [NSManagedObject] {
-                    var memory = MemCard(id: 0, image: "N/A", date: "N/A", title: "N/A", location: "N/A", overview: "N/A")
+                    var memory = MemCard(id: 0, image: "N/A", date: "N/A", title: "N/A", location: "N/A", overview: "N/A", imageData: Data())
                     memory.id = MemoryCard.value(forKey: "id") as! Int
                     memory.image = MemoryCard.value(forKey: "image") as! String
                     memory.date = MemoryCard.value(forKey: "date") as! String
                     memory.title = MemoryCard.value(forKey: "title") as! String
                     memory.location = MemoryCard.value(forKey: "location") as! String
                     memory.overview = MemoryCard.value(forKey: "overview") as! String
+                    memory.imageData = MemoryCard.value(forKey: "imageData") as! Data
                     self.memCards.append(memory)
                 }
             } catch {
@@ -128,16 +135,7 @@ extension MasterView: UICollectionViewDataSource {
         
         if let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? CardCell {
             
-            let strURL = memCards[indexPath.row].image
-            let imageURL = URL(string: strURL)!
-            var imageData: Data = Data()
-            do {
-                imageData = try Data(contentsOf: imageURL)
-                infoCell.setData(image: UIImage(data: imageData)!, date: memCards[indexPath.row].date, title: memCards[indexPath.row].title, location: memCards[indexPath.row].location, overview: memCards[indexPath.row].overview)
-            } catch  {
-                print(error)
-                infoCell.setData(image: UIImage(named: "Test")!, date: memCards[indexPath.row].date, title: memCards[indexPath.row].title, location: memCards[indexPath.row].location, overview: memCards[indexPath.row].overview)
-            }
+            infoCell.setData(image: UIImage(data: memCards[indexPath.row].imageData)!, date: memCards[indexPath.row].date, title: memCards[indexPath.row].title, location: memCards[indexPath.row].location, overview: memCards[indexPath.row].overview)
             
             cell = infoCell
         }

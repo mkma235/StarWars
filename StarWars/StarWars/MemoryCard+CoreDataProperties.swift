@@ -2,7 +2,7 @@
 //  MemoryCard+CoreDataProperties.swift
 //  StarWars
 //
-//  Created by Mariano Manuel on 5/26/21.
+//  Created by Mariano Manuel on 6/2/21.
 //
 //
 
@@ -22,6 +22,7 @@ extension MemoryCard {
     @NSManaged public var location: String?
     @NSManaged public var overview: String?
     @NSManaged public var title: String?
+    @NSManaged public var imageData: Data?
 
 }
 

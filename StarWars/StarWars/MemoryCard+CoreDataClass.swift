@@ -2,7 +2,7 @@
 //  MemoryCard+CoreDataClass.swift
 //  StarWars
 //
-//  Created by Mariano Manuel on 5/26/21.
+//  Created by Mariano Manuel on 6/2/21.
 //
 //
 
