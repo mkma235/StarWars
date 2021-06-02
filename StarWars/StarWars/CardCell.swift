@@ -9,7 +9,7 @@ import UIKit
 
 class CardCell: UICollectionViewCell {
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet lazy var imageView: UIImageView! = UIImageView()
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var location: UILabel!

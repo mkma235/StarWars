@@ -29,11 +29,23 @@ class MasterView: UIViewController {
         super.loadView()
         
         //Set Core Data
+        var firstAppRun = true
+        var airPlaneMode = false
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
-        if memCards.count != 10 {
-            cardService.fetchDetails { Cards in
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MemoryCard")
+        do {
+            let count = try context.count(for: request)
+            if count == 10 {
+                firstAppRun = false
+            }
+        } catch {
+            print("Failed")
+        }
+        
+        if firstAppRun && !airPlaneMode {
+            self.cardService.fetchDetails { Cards in
                 if let Cards = Cards {
                     for Card in Cards {
                         var memory = MemCard(id: 0, image: "N/A", date: "N/A", title: "N/A", location: "N/A", overview: "N/A")
@@ -47,6 +59,41 @@ class MasterView: UIViewController {
                     }
                 }
                 self.collectionView.reloadData()
+            }
+            
+            Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { (_) in
+                for i in 0..<self.memCards.count {
+                    let entity = NSEntityDescription.entity(forEntityName: "MemoryCard", in: context)
+                    let MemoryCard = NSManagedObject(entity: entity!, insertInto: context)
+                    MemoryCard.setValue(self.memCards[i].id, forKey: "id")
+                    MemoryCard.setValue(self.memCards[i].image, forKey: "image")
+                    MemoryCard.setValue(self.memCards[i].date, forKey: "date")
+                    MemoryCard.setValue(self.memCards[i].title, forKey: "title")
+                    MemoryCard.setValue(self.memCards[i].location, forKey: "location")
+                    MemoryCard.setValue(self.memCards[i].overview, forKey: "overview")
+                }
+                do {
+                    try context.save()
+                } catch {
+                    print("Save Error")
+                }
+            }
+        } else {
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MemoryCard")
+            do {
+                let result = try context.fetch(request)
+                for MemoryCard in result as! [NSManagedObject] {
+                    var memory = MemCard(id: 0, image: "N/A", date: "N/A", title: "N/A", location: "N/A", overview: "N/A")
+                    memory.id = MemoryCard.value(forKey: "id") as! Int
+                    memory.image = MemoryCard.value(forKey: "image") as! String
+                    memory.date = MemoryCard.value(forKey: "date") as! String
+                    memory.title = MemoryCard.value(forKey: "title") as! String
+                    memory.location = MemoryCard.value(forKey: "location") as! String
+                    memory.overview = MemoryCard.value(forKey: "overview") as! String
+                    self.memCards.append(memory)
+                }
+            } catch {
+                print("Failed")
             }
         }
     }
