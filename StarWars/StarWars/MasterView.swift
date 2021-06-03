@@ -15,6 +15,38 @@ class MasterView: UIViewController {
     let cardService = CardService()
     var memCards: [MemCard] = []
     
+    func reformatDate(dateToBeFormatted: String) -> String {
+        let testDate = dateToBeFormatted
+
+        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+        let dateTime = testDate.components(separatedBy: "T")
+        let date = dateTime[0]
+        let dateParts = date.components(separatedBy: "-")
+        let year = Int(dateParts[0])
+        let month = Int(dateParts[1])!
+        let day = Int(dateParts[2])
+
+        let times = dateTime[1]
+        let timez = times.components(separatedBy: "Z")
+        let time = timez[0]
+        let timeParts = time.components(separatedBy: ":")
+        var ampm = "am"
+        var hour = Int(timeParts[0])
+        if hour! > 12 {
+            hour! -= 12
+            ampm = "pm"
+        }
+        let minute = Int(timeParts[1])!
+        let minutes = String(format: "%02d", minute)
+        
+
+        //Ex.) May 4, 2015 at 4:30pm
+        let formattedString = "\(months[(month-1)]) \(day!), \(year!) at \(hour!):\(minutes)\(ampm)"
+
+        return formattedString
+    }
+    
     override func loadView() {
         super.loadView()
         
@@ -42,7 +74,7 @@ class MasterView: UIViewController {
                         var memory = MemCard(id: 0, image: "N/A", date: "N/A", title: "N/A", location: "N/A", overview: "N/A", imageData: Data())
                         memory.id = Card.id
                         memory.image = Card.image ?? "placeHolder"
-                        memory.date = Card.date
+                        memory.date = self.reformatDate(dateToBeFormatted: Card.date)
                         memory.title = Card.title
                         memory.location = Card.locationline1
                         memory.overview = Card.description
