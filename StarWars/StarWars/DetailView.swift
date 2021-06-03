@@ -21,6 +21,7 @@ class DetailView: UIViewController {
         navigationController!.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Details"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareEvent))
+        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "share"
      
         self.imageDetail.image = UIImage(data: CardView.imageData)
         self.dateDetail.text = CardView.date
