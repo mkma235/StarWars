@@ -11,6 +11,7 @@ import CoreData
 class MasterView: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var progressView: UIProgressView!
     
     let cardService = CardService()
     var memCards: [MemCard] = []
@@ -52,21 +53,21 @@ class MasterView: UIViewController {
         
         //Set Core Data
         var firstAppRun = true
-        var airPlaneMode = false
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MemoryCard")
         do {
             let count = try context.count(for: request)
-            if count == 10 {
+            if count >= 10 {
                 firstAppRun = false
             }
         } catch {
             print("Failed")
         }
         
-        if firstAppRun && !airPlaneMode {
+        if firstAppRun {
+            progressView.setProgress(10.0, animated: true)
             //API Call
             self.cardService.fetchDetails { Cards in
                 if let Cards = Cards {
@@ -93,6 +94,7 @@ class MasterView: UIViewController {
                         self.memCards.append(memory)
                     }
                 }
+                self.progressView.isHidden = true
                 self.collectionView.reloadData()
             }
             //Save Core Data Values
@@ -115,6 +117,7 @@ class MasterView: UIViewController {
                 }
             }
         } else {
+            progressView.isHidden = true
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MemoryCard")
             let idSort = NSSortDescriptor(key:"id", ascending:true)
             request.sortDescriptors = [idSort]
